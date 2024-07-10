@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import type { SelectedProduct, Product } from "~/types/products";
+import ProductFormCard from "~/components/Products/ProductFormCard";
+import ProductDisplayCard from "~/components/Products/ProductDisplayCard";
 
 const items = [
   {
@@ -32,10 +35,39 @@ export default function HomePage() {
   };
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedItems, setSelectedItems] = useState<SelectedProduct[]>([]);
 
   const filteredProduct = items.filter((item) =>
     item.name.toLowerCase().includes(searchQuery),
   );
+
+  const handleAddProduct = (product: Product, newQuantity: number) => {
+    setSelectedItems((prevItems) => {
+      const currentSavedItem = prevItems.find(
+        (i) => i.product.id === product.id,
+      );
+      if (currentSavedItem) {
+        if (currentSavedItem.quantity + newQuantity > product.stock)
+          throw Error("Not Enough Stock");
+        return prevItems.map((i) => {
+          return i.product.id === product.id
+            ? {
+                product: product,
+                quantity: i.quantity + newQuantity,
+              }
+            : i;
+        });
+      } else {
+        return [
+          ...prevItems,
+          {
+            product: product,
+            quantity: newQuantity,
+          },
+        ];
+      }
+    });
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#F7E7DC] to-[#FFF8F3] text-white">
@@ -56,6 +88,18 @@ export default function HomePage() {
             <label>NOTES</label>
             <textarea name="notes" />
           </div>
+          <div className="flex w-full flex-col">
+            <p>Items Bought</p>
+            <div>
+              {selectedItems.map((item) => (
+                <ProductDisplayCard
+                  item={item.product}
+                  key={item.product.id}
+                  quantity={item.quantity}
+                />
+              ))}
+            </div>
+          </div>
 
           <button
             type="submit"
@@ -71,10 +115,14 @@ export default function HomePage() {
               setSearchQuery(e.target.value);
             }}
           />
-          <div className="flex flex-col">
-            {filteredProduct.map((item) => {
-              return <div key={item.id}>{item.name}</div>;
-            })}
+          <div className="mt-4 flex flex-col gap-4">
+            {filteredProduct.map((item) => (
+              <ProductFormCard
+                key={item.id}
+                handleSetAmount={handleAddProduct}
+                item={item}
+              />
+            ))}
           </div>
         </div>
       </div>
