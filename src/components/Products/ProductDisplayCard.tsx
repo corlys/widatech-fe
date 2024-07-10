@@ -17,6 +17,7 @@ export default function ProductDisplayCard({
       <p>{item.name}</p>
       <p className="tabular-nums">Price : {item.price}</p>
       <p className="tabular-nums">Quantity : {quantity}</p>
+      <p className="tabular-nums">Total: {Math.floor(quantity * item.price)}</p>
     </div>
   );
 }
