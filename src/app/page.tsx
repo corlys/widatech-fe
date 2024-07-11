@@ -5,6 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
+import axios from "axios";
 import type { SelectedProduct, Product } from "~/types/products";
 import type { InvoiceInput } from "~/types/forms";
 import ProductFormCard from "~/components/Products/ProductFormCard";
@@ -49,10 +50,16 @@ export default function HomePage() {
     resolver: zodResolver(productSchema),
   });
 
-  const onSubmitFn: SubmitHandler<InvoiceInput> = (data) => {
-    console.log(data);
-    console.log(selectedItems);
-    toast("Success", { type: "success" });
+  const onSubmitFn: SubmitHandler<InvoiceInput> = async (data) => {
+    try {
+      await axios.post("http://localhost:3001/invoice", {
+        ...data,
+        productsSold: JSON.stringify(selectedItems),
+      });
+      toast("Success", { type: "success" });
+    } catch (error) {
+      toast("Failed", { type: "error" });
+    }
   };
 
   const [searchQuery, setSearchQuery] = useState("");
