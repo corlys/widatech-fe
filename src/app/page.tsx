@@ -43,6 +43,7 @@ export default function HomePage() {
   });
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -61,6 +62,8 @@ export default function HomePage() {
           }, 0)
           .toString(),
       });
+      reset({ notes: undefined, customerName: "", salesPersonName: "" });
+      setSelectedItems([]);
       toast("Success", { type: "success" });
     } catch (error) {
       toast("Failed", { type: "error" });
@@ -159,10 +162,12 @@ export default function HomePage() {
         </form>
         <div className="flex flex-col items-center justify-center">
           <input
+            className="rounded-xl border border-[#758694] px-4 py-2"
             type="text"
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
+            placeholder="search products"
           />
           <div className="mt-4 flex flex-col gap-4">
             {filteredProduct.map((item) => (

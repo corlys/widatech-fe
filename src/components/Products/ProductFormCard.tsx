@@ -23,12 +23,18 @@ export default function ProductFormCard({
       <div className="flex items-center justify-between">
         <label>Buy Amount</label>
         <input
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => {
+            if (Number(e.target.value) > 0) setQuantity(Number(e.target.value));
+          }}
           type="number"
+          value={quantity}
           className="w-1/4 rounded-xl border border-[#758694] px-4 py-2"
         />
         <button
-          onClick={() => handleSetAmount(item, quantity)}
+          onClick={() => {
+            handleSetAmount(item, quantity);
+            setQuantity(0);
+          }}
           className="flex items-center justify-center rounded-xl bg-[#758694] px-2 py-2"
           type="button"
         >
