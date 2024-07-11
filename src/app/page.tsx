@@ -55,6 +55,11 @@ export default function HomePage() {
       await axios.post("http://localhost:3001/invoice", {
         ...data,
         productsSold: JSON.stringify(selectedItems),
+        totalAmount: selectedItems
+          .reduce((acc, curr) => {
+            return curr.quantity * curr.product.price + acc;
+          }, 0)
+          .toString(),
       });
       toast("Success", { type: "success" });
     } catch (error) {
