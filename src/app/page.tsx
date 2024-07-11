@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import type { SelectedProduct, Product } from "~/types/products";
 import type { InvoiceInput } from "~/types/forms";
 import ProductFormCard from "~/components/Products/ProductFormCard";
@@ -51,6 +52,7 @@ export default function HomePage() {
   const onSubmitFn: SubmitHandler<InvoiceInput> = (data) => {
     console.log(data);
     console.log(selectedItems);
+    toast("Success", { type: "success" });
   };
 
   const [searchQuery, setSearchQuery] = useState("");
