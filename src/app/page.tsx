@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { SelectedProduct, Product } from "~/types/products";
 import type { InvoiceInput } from "~/types/forms";
 import ProductFormCard from "~/components/Products/ProductFormCard";
@@ -32,7 +34,19 @@ const items = [
 ];
 
 export default function HomePage() {
-  const { register, handleSubmit } = useForm<InvoiceInput>();
+  const productSchema = z.object({
+    salesPersonName: z.string().min(1),
+    customerName: z.string().min(1),
+    notes: z.string().optional(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InvoiceInput>({
+    resolver: zodResolver(productSchema),
+  });
 
   const onSubmitFn: SubmitHandler<InvoiceInput> = (data) => {
     console.log(data);
@@ -88,6 +102,9 @@ export default function HomePage() {
               type="text"
               {...register("customerName")}
             />
+            {errors?.customerName && (
+              <p className="text-red-400">{errors.customerName.message}</p>
+            )}
           </div>
           <div className="flex flex-col items-start justify-between gap-2">
             <label>SALES PERSON NAME </label>
@@ -96,6 +113,9 @@ export default function HomePage() {
               type="text"
               {...register("salesPersonName")}
             />
+            {errors?.salesPersonName && (
+              <p className="text-red-400">{errors.salesPersonName.message}</p>
+            )}
           </div>
           <div className="flex flex-col items-start justify-between gap-2">
             <label>NOTES</label>
