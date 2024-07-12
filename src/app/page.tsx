@@ -106,43 +106,45 @@ export default function HomePage() {
   };
 
   return (
-    <div className="container flex flex-row items-center justify-center gap-12 px-4 py-16 text-[#405D72]">
+    <div className="container flex min-h-screen flex-col items-center justify-between gap-12 px-4 py-16 text-[#405D72] md:flex-row">
       <form
         onSubmit={handleSubmit(onSubmitFn)}
-        className="flex flex-col items-center justify-center gap-2"
+        className="flex w-full flex-col items-center justify-start gap-6 md:w-1/2"
       >
-        <div className="flex flex-col items-start justify-between gap-2">
-          <label>CUSTOMER NAME </label>
-          <input
-            className="rounded-xl border border-[#758694] p-2"
-            type="text"
-            {...register("customerName")}
-          />
-          {errors?.customerName && (
-            <p className="text-red-400">{errors.customerName.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col items-start justify-between gap-2">
-          <label>SALES PERSON NAME </label>
-          <input
-            className="rounded-xl border border-[#758694] p-2"
-            type="text"
-            {...register("salesPersonName")}
-          />
-          {errors?.salesPersonName && (
-            <p className="text-red-400">{errors.salesPersonName.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col items-start justify-between gap-2">
-          <label>NOTES</label>
-          <textarea
-            className="rounded-xl border border-[#758694] p-2"
-            {...register("notes")}
-          />
+        <div className="w-full space-y-4">
+          <div className="flex flex-col items-start justify-between gap-2">
+            <label>CUSTOMER NAME </label>
+            <input
+              className="w-full rounded-xl border border-[#758694] p-2"
+              type="text"
+              {...register("customerName")}
+            />
+            {errors?.customerName && (
+              <p className="text-red-400">{errors.customerName.message}</p>
+            )}
+          </div>
+          <div className="flex flex-col items-start justify-between gap-2">
+            <label>SALES PERSON NAME </label>
+            <input
+              className="w-full rounded-xl border border-[#758694] p-2"
+              type="text"
+              {...register("salesPersonName")}
+            />
+            {errors?.salesPersonName && (
+              <p className="text-red-400">{errors.salesPersonName.message}</p>
+            )}
+          </div>
+          <div className="flex flex-col items-start justify-between gap-2">
+            <label>NOTES</label>
+            <textarea
+              className="w-full rounded-xl border border-[#758694] p-2"
+              {...register("notes")}
+            />
+          </div>
         </div>
         <div className="flex w-full flex-col gap-4">
           <p>Items Bought</p>
-          <div className="flex flex-row items-center justify-center gap-2 p-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {selectedItems.map((item) => (
               <ProductDisplayCard
                 item={item.product}
@@ -154,21 +156,21 @@ export default function HomePage() {
         </div>
         <button
           type="submit"
-          className="flex items-center justify-center rounded-xl bg-[#758694] px-2 py-2"
+          className="flex w-full items-center justify-center rounded-xl bg-[#758694] px-6 py-2 text-white md:w-auto"
         >
           Submit
         </button>
       </form>
-      <div className="flex flex-col items-center justify-center">
+      <div className="mt-8 flex w-full flex-col items-center justify-start md:mt-0 md:w-1/2">
         <input
-          className="rounded-xl border border-[#758694] px-4 py-2"
+          className="mb-4 w-full rounded-xl border border-[#758694] px-4 py-2"
           type="text"
           onChange={(e) => {
             setSearchQuery(e.target.value);
           }}
-          placeholder="search products"
+          placeholder="Search products"
         />
-        <div className="mt-4 flex flex-col items-center justify-center gap-4">
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
           {filteredProduct.map((item) => (
             <ProductFormCard
               key={item.id}

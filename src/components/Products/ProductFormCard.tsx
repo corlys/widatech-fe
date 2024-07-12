@@ -15,33 +15,44 @@ export default function ProductFormCard({
 
   return (
     <div
-      className="flex flex-row items-center justify-center gap-4 rounded-xl border border-[#758694] bg-[#FFF8F3] px-4 py-2"
+      className="flex w-full flex-col items-center justify-between gap-4 rounded-xl border border-[#758694] bg-[#FFF8F3] p-4 sm:flex-row"
       key={item.id}
     >
-      <div className="flex flex-col items-center justify-center gap-2">
-        <Image src={item.pictureUrl} alt={item.name} width={100} height={100} />
-        <p>{item.name}</p>
+      <div className="flex flex-col items-center justify-center">
+        <Image
+          src={item.pictureUrl}
+          alt={item.name}
+          width={80}
+          height={80}
+          className="object-cover"
+        />
+        <p className="mt-2 max-w-[80px] truncate text-sm font-medium">
+          {item.name}
+        </p>
       </div>
-      <div className="flex flex-col items-start justify-center gap-2">
-        <p>Price : {item.price}</p>
-        <p>Stock : {item.stock}</p>
+      <div className="flex flex-col items-center justify-center space-y-1 sm:items-start">
+        <p className="text-sm tabular-nums">Price: ${item.price.toFixed(2)}</p>
+        <p className="text-sm tabular-nums">Stock: {item.stock}</p>
       </div>
-      <div className="flex items-center justify-between gap-2">
-        <label>Buy Amount</label>
+      <div className="flex w-full flex-col flex-wrap items-center justify-between gap-2 md:w-auto md:flex-row">
+        <label className="text-sm">Buy Amount</label>
         <input
           onChange={(e) => {
-            if (Number(e.target.value) > 0) setQuantity(Number(e.target.value));
+            const value = Number(e.target.value);
+            if (value > 0 && value <= item.stock) setQuantity(value);
           }}
           type="number"
           value={quantity}
-          className="w-1/4 rounded-xl border border-[#758694] px-4 py-2"
+          min="1"
+          max={item.stock}
+          className="w-20 rounded-xl border border-[#758694] px-2 py-1 text-sm"
         />
         <button
           onClick={() => {
             handleSetAmount(item, quantity);
             setQuantity(0);
           }}
-          className="flex items-center justify-center rounded-xl bg-[#758694] px-2 py-2"
+          className="flex items-center justify-center rounded-xl bg-[#758694] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#5a6b7a]"
           type="button"
         >
           Add
