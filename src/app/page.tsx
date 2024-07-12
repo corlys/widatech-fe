@@ -83,8 +83,10 @@ export default function HomePage() {
         (i) => i.product.id === product.id,
       );
       if (currentSavedItem) {
-        if (currentSavedItem.quantity + newQuantity > product.stock)
-          throw Error("Not Enough Stock");
+        if (currentSavedItem.quantity + newQuantity > product.stock) {
+          toast("Not enough stock", { type: "error" });
+          return [...prevItems];
+        }
         return prevItems.map((i) => {
           return i.product.id === product.id
             ? {
