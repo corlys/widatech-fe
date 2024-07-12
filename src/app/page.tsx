@@ -14,22 +14,22 @@ import ProductDisplayCard from "~/components/Products/ProductDisplayCard";
 const items = [
   {
     id: "1",
-    name: "Product 1",
-    pictureUrl: "https://example.com/product1.jpg",
+    name: "Wortel",
+    pictureUrl: "/wortel.png",
     stock: 100,
     price: 29.99,
   },
   {
     id: "2",
-    name: "Product 2",
-    pictureUrl: "https://example.com/product2.jpg",
+    name: "Ubi",
+    pictureUrl: "/ubi.png",
     stock: 50,
     price: 59.99,
   },
   {
     id: "3",
-    name: "Product 3",
-    pictureUrl: "https://example.com/product3.jpg",
+    name: "Kentang",
+    pictureUrl: "/kentang.jpeg",
     stock: 200,
     price: 19.99,
   },
@@ -142,7 +142,7 @@ export default function HomePage() {
         </div>
         <div className="flex w-full flex-col gap-4">
           <p>Items Bought</p>
-          <div className="flex flex-col items-center justify-center gap-2 p-2">
+          <div className="flex flex-row items-center justify-center gap-2 p-2">
             {selectedItems.map((item) => (
               <ProductDisplayCard
                 item={item.product}
@@ -168,7 +168,7 @@ export default function HomePage() {
           }}
           placeholder="search products"
         />
-        <div className="mt-4 flex flex-col gap-4">
+        <div className="mt-4 flex flex-col items-center justify-center gap-4">
           {filteredProduct.map((item) => (
             <ProductFormCard
               key={item.id}
