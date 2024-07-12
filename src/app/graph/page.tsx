@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   selectRevenues,
   selectStatus,
@@ -23,6 +23,17 @@ export default function Graph() {
   const revenuesSelector = useAppSelector(selectRevenues);
   const statusSelector = useAppSelector(selectStatus);
 
+  const [minRevenue, maxRevenue] = useMemo(() => {
+    if (revenuesSelector.length === 0) return [0, 100];
+    const revenues = revenuesSelector.map((item) =>
+      parseFloat(item.revenue.toString()),
+    );
+    console.log([Math.min(...revenues), Math.max(...revenues)], "maxmin");
+    return [Math.min(...revenues), Math.max(...revenues)];
+  }, [revenuesSelector]);
+
+  const padding = (maxRevenue - minRevenue) * 0.1;
+
   const [revenueType, setRevenueType] = useState<
     "daily" | "weekly" | "monthly"
   >("daily");
@@ -35,13 +46,16 @@ export default function Graph() {
     console.log(revenuesSelector);
   }, [revenuesSelector]);
 
+  const formatXAxis = (value: string) => {
+    const date = new Date(value);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  };
+
   return (
-    <div className="container flex min-h-screen flex-col items-center justify-between gap-4 py-8 text-[#405D72]">
-      <div className="h-[500px] w-1/2">
+    <div className="container flex min-h-screen flex-col items-center justify-center gap-8 py-8 text-[#405D72]">
+      <div className="h-[500px] w-full max-w-3xl">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            width={500}
-            height={300}
             data={revenuesSelector}
             margin={{
               top: 5,
@@ -51,8 +65,11 @@ export default function Graph() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis scale="log" domain={["auto", "auto"]} />
+            <XAxis dataKey="date" tickFormatter={formatXAxis} />
+            <YAxis
+              reversed={false}
+              domain={[Math.max(0, minRevenue - padding), maxRevenue + padding]}
+            />
             <Tooltip />
             <Legend />
             <Line
@@ -64,10 +81,18 @@ export default function Graph() {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <div className="mx-auto flex items-center justify-between">
-        <button onClick={() => setRevenueType("daily")}>daily</button>
-        <button onClick={() => setRevenueType("weekly")}>weekly</button>
-        <button onClick={() => setRevenueType("monthly")}>monthly</button>
+      <div className="flex gap-4">
+        {["daily", "weekly", "monthly"].map((type) => (
+          <button
+            key={type}
+            onClick={() =>
+              setRevenueType(type as "daily" | "weekly" | "monthly")
+            }
+            className="rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+          >
+            {type}
+          </button>
+        ))}
       </div>
     </div>
   );
