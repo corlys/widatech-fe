@@ -1,8 +1,10 @@
 import "~/styles/globals.css";
 
+import StoreProvider from "~/app/StoreProvider";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ToastContainer } from "react-toastify";
+import { default as Layout } from "~/components/Layouts/RootLayout";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
@@ -15,11 +17,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
-        {children}
-        <ToastContainer />
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en" className={`${GeistSans.variable}`}>
+        <body>
+          <Layout>
+            {children}
+            <ToastContainer />
+          </Layout>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

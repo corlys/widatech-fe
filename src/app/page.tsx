@@ -106,80 +106,78 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#F7E7DC] to-[#FFF8F3] text-white">
-      <div className="container flex flex-row items-center justify-center gap-12 px-4 py-16 text-[#405D72]">
-        <form
-          onSubmit={handleSubmit(onSubmitFn)}
-          className="flex flex-col items-center justify-center gap-2"
-        >
-          <div className="flex flex-col items-start justify-between gap-2">
-            <label>CUSTOMER NAME </label>
-            <input
-              className="rounded-xl border border-[#758694] p-2"
-              type="text"
-              {...register("customerName")}
-            />
-            {errors?.customerName && (
-              <p className="text-red-400">{errors.customerName.message}</p>
-            )}
-          </div>
-          <div className="flex flex-col items-start justify-between gap-2">
-            <label>SALES PERSON NAME </label>
-            <input
-              className="rounded-xl border border-[#758694] p-2"
-              type="text"
-              {...register("salesPersonName")}
-            />
-            {errors?.salesPersonName && (
-              <p className="text-red-400">{errors.salesPersonName.message}</p>
-            )}
-          </div>
-          <div className="flex flex-col items-start justify-between gap-2">
-            <label>NOTES</label>
-            <textarea
-              className="rounded-xl border border-[#758694] p-2"
-              {...register("notes")}
-            />
-          </div>
-          <div className="flex w-full flex-col gap-4">
-            <p>Items Bought</p>
-            <div className="flex flex-col items-center justify-center gap-2 p-2">
-              {selectedItems.map((item) => (
-                <ProductDisplayCard
-                  item={item.product}
-                  key={item.product.id}
-                  quantity={item.quantity}
-                />
-              ))}
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="flex items-center justify-center rounded-xl bg-[#758694] px-2 py-2"
-          >
-            Submit
-          </button>
-        </form>
-        <div className="flex flex-col items-center justify-center">
+    <div className="container flex flex-row items-center justify-center gap-12 px-4 py-16 text-[#405D72]">
+      <form
+        onSubmit={handleSubmit(onSubmitFn)}
+        className="flex flex-col items-center justify-center gap-2"
+      >
+        <div className="flex flex-col items-start justify-between gap-2">
+          <label>CUSTOMER NAME </label>
           <input
-            className="rounded-xl border border-[#758694] px-4 py-2"
+            className="rounded-xl border border-[#758694] p-2"
             type="text"
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-            }}
-            placeholder="search products"
+            {...register("customerName")}
           />
-          <div className="mt-4 flex flex-col gap-4">
-            {filteredProduct.map((item) => (
-              <ProductFormCard
-                key={item.id}
-                handleSetAmount={handleAddProduct}
-                item={item}
+          {errors?.customerName && (
+            <p className="text-red-400">{errors.customerName.message}</p>
+          )}
+        </div>
+        <div className="flex flex-col items-start justify-between gap-2">
+          <label>SALES PERSON NAME </label>
+          <input
+            className="rounded-xl border border-[#758694] p-2"
+            type="text"
+            {...register("salesPersonName")}
+          />
+          {errors?.salesPersonName && (
+            <p className="text-red-400">{errors.salesPersonName.message}</p>
+          )}
+        </div>
+        <div className="flex flex-col items-start justify-between gap-2">
+          <label>NOTES</label>
+          <textarea
+            className="rounded-xl border border-[#758694] p-2"
+            {...register("notes")}
+          />
+        </div>
+        <div className="flex w-full flex-col gap-4">
+          <p>Items Bought</p>
+          <div className="flex flex-col items-center justify-center gap-2 p-2">
+            {selectedItems.map((item) => (
+              <ProductDisplayCard
+                item={item.product}
+                key={item.product.id}
+                quantity={item.quantity}
               />
             ))}
           </div>
         </div>
+        <button
+          type="submit"
+          className="flex items-center justify-center rounded-xl bg-[#758694] px-2 py-2"
+        >
+          Submit
+        </button>
+      </form>
+      <div className="flex flex-col items-center justify-center">
+        <input
+          className="rounded-xl border border-[#758694] px-4 py-2"
+          type="text"
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+          }}
+          placeholder="search products"
+        />
+        <div className="mt-4 flex flex-col gap-4">
+          {filteredProduct.map((item) => (
+            <ProductFormCard
+              key={item.id}
+              handleSetAmount={handleAddProduct}
+              item={item}
+            />
+          ))}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
