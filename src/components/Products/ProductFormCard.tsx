@@ -50,7 +50,9 @@ export default function ProductFormCard({
         />
         <Button
           onClick={() => {
-            handleSetAmount(item, quantity);
+            if (quantity > 0) {
+              handleSetAmount(item, quantity);
+            }
             setQuantity(0);
           }}
           type="button"
