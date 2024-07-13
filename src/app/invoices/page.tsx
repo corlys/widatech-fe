@@ -36,6 +36,7 @@ export default function Invoices() {
       <div className="flex w-full flex-grow flex-col items-center justify-between gap-y-6">
         <div className="flex flex-1 flex-col items-center justify-center gap-y-6">
           {invoiceStatus === "idle" &&
+            invoices.length > 0 &&
             invoices.map((invoice) => {
               return <InvoiceCard invoice={invoice} key={invoice.id} />;
             })}
