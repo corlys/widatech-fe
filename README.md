@@ -71,3 +71,17 @@
 - **Email Submission**:
   - Email the repository link to `hiring@wida-tech.com`.
   - CC the email to `hannling.tan@wida-tech.com` and `rey@wida-tech.com`.
+
+## How to run
+
+Make sure to put BE port on to the .env file like in .env.example
+
+```bash
+NEXT_PUBLIC_BE_PORT=3001
+```
+
+Then run it using the dev command
+
+```bash
+pnpm dev
+```
