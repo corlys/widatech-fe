@@ -8,7 +8,7 @@ type FetchInvoiceResponse = {
 
 export const fetchInvoice = async (page?: number) => {
   const res = await axios.get<FetchInvoiceResponse>(
-    "http://localhost:3001/invoice?page=" + page,
+    `http://localhost:${process.env.NEXT_PUBLIC_BE_PORT}/invoice?page=` + page,
   );
   return res;
 };

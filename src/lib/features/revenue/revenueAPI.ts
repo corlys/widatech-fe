@@ -7,7 +7,7 @@ type FetchRevenueResponse = {
 
 export const fetchRevenue = async (type: string) => {
   const res = await axios.get<FetchRevenueResponse>(
-    "http://localhost:3001/revenue?type=" + type,
+    `http://localhost:${process.env.NEXT_PUBLIC_BE_PORT}/revenue?type=` + type,
   );
   return res;
 };
