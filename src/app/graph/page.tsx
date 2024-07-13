@@ -39,11 +39,13 @@ export default function Graph() {
 
   useEffect(() => {
     void dispatch(fetchRevenues(revenueType));
+    const id = setInterval(() => {
+      void dispatch(fetchRevenues(revenueType));
+    }, 3000);
+    return () => {
+      clearInterval(id);
+    };
   }, [dispatch, revenueType]);
-
-  useEffect(() => {
-    console.log(revenuesSelector);
-  }, [revenuesSelector]);
 
   const formatXAxis = (value: string) => {
     const date = new Date(value);
