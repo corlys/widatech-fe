@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo } from "react";
 import {
   selectRevenues,
-  selectStatus,
   fetchRevenues,
 } from "~/lib/features/revenue/revenueSlice";
 import { useAppDispatch, useAppSelector } from "~/lib/hooks";
@@ -17,11 +16,11 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import Button from "~/components/Button";
 
 export default function Graph() {
   const dispatch = useAppDispatch();
   const revenuesSelector = useAppSelector(selectRevenues);
-  const statusSelector = useAppSelector(selectStatus);
 
   const [minRevenue, maxRevenue] = useMemo(() => {
     if (revenuesSelector.length === 0) return [0, 100];
@@ -83,15 +82,14 @@ export default function Graph() {
       </div>
       <div className="flex gap-4">
         {["daily", "weekly", "monthly"].map((type) => (
-          <button
+          <Button
             key={type}
             onClick={() =>
               setRevenueType(type as "daily" | "weekly" | "monthly")
             }
-            className="rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
           >
             {type}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

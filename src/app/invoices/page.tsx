@@ -9,6 +9,7 @@ import {
   nextPageAsync,
 } from "~/lib/features/invoice/invoiceSlice";
 import { useAppDispatch, useAppSelector } from "~/lib/hooks";
+import Button from "~/components/Button";
 
 const InvoiceCard = dynamic(
   () => import("../../components/Invoices/InvoiceCard"),
@@ -40,21 +41,21 @@ export default function Invoices() {
             })}
         </div>
         <div className="mt-auto flex items-center justify-center gap-4">
-          <button
+          <Button
             type="button"
             disabled={page <= 1}
             onClick={() => setPage((prev) => prev - 1)}
           >
             Prev
-          </button>
+          </Button>
           <p>{page}</p>
-          <button
+          <Button
             type="button"
             disabled={!hasNextPage}
             onClick={() => setPage((prev) => prev + 1)}
           >
             Next
-          </button>
+          </Button>
         </div>
       </div>
     </div>

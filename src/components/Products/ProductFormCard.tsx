@@ -1,4 +1,5 @@
 import { type Product } from "~/types/products";
+import Button from "~/components/Button";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -47,16 +48,15 @@ export default function ProductFormCard({
           max={item.stock}
           className="w-20 rounded-xl border border-[#758694] px-2 py-1 text-sm"
         />
-        <button
+        <Button
           onClick={() => {
             handleSetAmount(item, quantity);
             setQuantity(0);
           }}
-          className="flex items-center justify-center rounded-xl bg-[#758694] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#5a6b7a]"
           type="button"
         >
           Add
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import type { SelectedProduct, Product } from "~/types/products";
 import type { InvoiceInput } from "~/types/forms";
 import ProductFormCard from "~/components/Products/ProductFormCard";
 import ProductDisplayCard from "~/components/Products/ProductDisplayCard";
+import Button from "~/components/Button";
 
 const items = [
   {
@@ -156,12 +157,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-        <button
-          type="submit"
-          className="flex w-full items-center justify-center rounded-xl bg-[#758694] px-6 py-2 text-white md:w-auto"
-        >
-          Submit
-        </button>
+        <Button type="submit">Submit</Button>
       </form>
       <div className="mt-8 flex w-full flex-col items-center justify-start md:mt-0 md:w-1/2">
         <input
